@@ -1,4 +1,4 @@
-package tec.bd.datasource;
+package tec.bd.social.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

@@ -15,8 +15,8 @@ public class SessionRepositoryImpl extends BaseRepository<Session> implements Se
 
 
     private static String FIND_ALL_SESSION_QUERY = "select client_id,session_id,createdat, if(minute(timediff(utc_timestamp(), createdat)) <= 30, \"ACTIVE\", \"INACTIVE\" ) as sessionStatus from sessions order by createdat asc";
-    private static String VALIDATE_SESSION_QUERY = "validate_session(?)";
-    private static String CREATE_SESSION_QUERY = "create_session(?)";
+    private static String VALIDATE_SESSION_QUERY = "call validate_session(?)";
+    private static String CREATE_SESSION_QUERY = "call create_session(?)";
     private static String UPDATE_SESSION_QUERY = "update sessions set session_id = ?, createdat = ? where client_id = ?";
 
 
@@ -45,16 +45,14 @@ public class SessionRepositoryImpl extends BaseRepository<Session> implements Se
     }
 
     public Session validate(String sessionId) {
-
         try {
             var connection = this.connect();
             var statement = connection.prepareStatement(VALIDATE_SESSION_QUERY);
             statement.setString(1, sessionId);
             var resultSet = this.query(statement);
-            while(resultSet.next()) {
-                var client = toEntity(resultSet);
-                return client;
-            }
+            var session = toEntity(resultSet);
+            return session;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

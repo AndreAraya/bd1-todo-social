@@ -59,7 +59,7 @@ public class SessionServiceImpl implements SessionService {
             throw new CredentialsException("Client secret not equal");
         }
         var sessionId = UUID.randomUUID().toString();
-        var newSession = sessionRepository.save(
+        var newSession = sessionRepository.create(
                 new Session(dbCredentials.getClientId(), sessionId, SessionStatus.ACTIVE, new Date())
         );
         if(null == newSession) {
@@ -75,7 +75,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session validateSession(String session) {
-        var sessionInDb = this.sessionRepository.findBySessionId(session);
+        var sessionInDb = this.sessionRepository.validate(session);
         if(null == sessionInDb) {
             return new Session(session, SessionStatus.INACTIVE);
 

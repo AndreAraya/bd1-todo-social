@@ -1,4 +1,4 @@
-package tec.bd.authentication;
+package tec.bd.social.authentication;
 
 public interface AuthenticationClient {
 

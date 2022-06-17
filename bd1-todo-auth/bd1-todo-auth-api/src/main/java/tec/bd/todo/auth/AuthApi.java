@@ -24,6 +24,7 @@ public class AuthApi {
 
 
         port(8080);
+
         options("/", (request, response) -> {
             response.header("Content-Type", "application/json");
             return Map.of(

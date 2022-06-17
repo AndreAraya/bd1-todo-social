@@ -1,4 +1,4 @@
-package tec.bd.datasource;
+package tec.bd.social.datasource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
